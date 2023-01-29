@@ -1,6 +1,5 @@
 package br.com.events.mailer.domain.message;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +10,6 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Builder
 public class EmailRequestMessage {
 
     private String to;
