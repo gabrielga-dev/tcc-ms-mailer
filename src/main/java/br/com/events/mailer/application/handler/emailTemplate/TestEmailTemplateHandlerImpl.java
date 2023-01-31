@@ -1,5 +1,7 @@
 package br.com.events.mailer.application.handler.emailTemplate;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
 
 import br.com.events.mailer.domain.entity.EmailTemplate;
@@ -14,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
-public class TestEmailTemplateHandlerImpl extends EmailTemplateHandler {
+public class TestEmailTemplateHandlerImpl extends EmailTemplateHandler<Void> {
 
     public TestEmailTemplateHandlerImpl(final EmailTemplateRepository repository) {
         super(repository);
@@ -22,6 +24,11 @@ public class TestEmailTemplateHandlerImpl extends EmailTemplateHandler {
 
     public Long getHandledTemplateId() {
         return 1L;
+    }
+
+    @Override
+    public Map<String, Object> generateMapValues(final Void values) {
+        return null;
     }
 
     @Override

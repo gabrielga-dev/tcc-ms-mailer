@@ -1,5 +1,7 @@
 package br.com.events.mailer.infrastructure.handler.emailTemplate;
 
+import java.util.Map;
+
 import br.com.events.mailer.domain.entity.EmailTemplate;
 import br.com.events.mailer.domain.repository.EmailTemplateRepository;
 import br.com.events.mailer.infrastructure.exception.EmailTemplateNotFoundException;
@@ -13,11 +15,13 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RequiredArgsConstructor
-public abstract class EmailTemplateHandler {
+public abstract class EmailTemplateHandler <T> {
 
     protected final EmailTemplateRepository repository;
 
     public abstract Long getHandledTemplateId();
+
+    public abstract Map<String, Object> generateMapValues(T values);
 
     abstract protected String applyDataToTemplate(String jsonBody, EmailTemplate template);
 
