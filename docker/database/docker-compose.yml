@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+
+  msauth_database:
+    container_name: "db-ms-auth"
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: msauth
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+
+  msmailer_database:
+    container_name: "db-ms-mailer"
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: msmailer
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3307:3306"
+
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
