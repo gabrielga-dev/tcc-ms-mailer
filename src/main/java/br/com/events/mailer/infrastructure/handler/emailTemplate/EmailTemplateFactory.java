@@ -1,5 +1,6 @@
 package br.com.events.mailer.infrastructure.handler.emailTemplate;
 
+import br.com.events.mailer.domain.dto.EmailPresentationDTO;
 import br.com.events.mailer.domain.message.EmailRequestMessage;
 
 /**
@@ -9,5 +10,5 @@ import br.com.events.mailer.domain.message.EmailRequestMessage;
  */
 public interface EmailTemplateFactory {
 
-    String findTemplateHandlerAndApplyData(EmailRequestMessage emailRequestMessage, String jsonBody);
+    EmailPresentationDTO findTemplateHandlerAndApplyData(EmailRequestMessage emailRequestMessage, String jsonBody);
 }

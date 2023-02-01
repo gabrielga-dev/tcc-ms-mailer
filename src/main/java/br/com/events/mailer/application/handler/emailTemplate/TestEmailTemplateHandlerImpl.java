@@ -4,7 +4,10 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import br.com.events.mailer.domain.entity.EmailTemplate;
+import br.com.events.mailer.domain.message.PersonCreationEmailValidationEmailMessage;
 import br.com.events.mailer.domain.repository.EmailTemplateRepository;
 import br.com.events.mailer.infrastructure.handler.emailTemplate.EmailTemplateHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -27,12 +30,22 @@ public class TestEmailTemplateHandlerImpl extends EmailTemplateHandler<Void> {
     }
 
     @Override
+    public String getSubject(Void data) {
+        return "TEST!";
+    }
+
+    @Override
+    public Void parseData(final String jsonData) throws JsonProcessingException {
+        return null;
+    }
+
+    @Override
     public Map<String, Object> generateMapValues(final Void values) {
         return null;
     }
 
     @Override
-    protected String applyDataToTemplate(final String jsonBody, final EmailTemplate template) {
+    protected String applyDataToTemplate(final Void jsonBody, final EmailTemplate template) {
         return template.getContent();
     }
 }

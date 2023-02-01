@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import br.com.events.mailer.domain.dto.EmailPresentationDTO;
 import br.com.events.mailer.domain.message.EmailRequestMessage;
 import br.com.events.mailer.infrastructure.exception.EmailTemplateHandlerNotFoundException;
 import br.com.events.mailer.infrastructure.handler.emailTemplate.EmailTemplateFactory;
@@ -32,7 +33,7 @@ public class EmailTemplateFactoryImpl implements EmailTemplateFactory {
     }
 
     @Override
-    public String findTemplateHandlerAndApplyData(final EmailRequestMessage emailRequestMessage,
+    public EmailPresentationDTO findTemplateHandlerAndApplyData(final EmailRequestMessage emailRequestMessage,
         final String jsonBody) {
         var handlerOpt = Optional.ofNullable(
             handlerMap.get(emailRequestMessage.getTemplateId())

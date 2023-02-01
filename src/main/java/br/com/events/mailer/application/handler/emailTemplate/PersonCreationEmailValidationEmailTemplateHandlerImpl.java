@@ -8,6 +8,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.messageresolver.StandardMessageResolver;
 import org.thymeleaf.templatemode.StandardTemplateModeHandlers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.events.mailer.application.config.resolver.StaticTemplateExecutor;
@@ -46,6 +47,18 @@ public class PersonCreationEmailValidationEmailTemplateHandlerImpl
     }
 
     @Override
+    public String getSubject(PersonCreationEmailValidationEmailMessage data) {
+        return "Bem-vindo(a) ao MyEvents!";
+    }
+
+    @Override
+    public PersonCreationEmailValidationEmailMessage parseData(final String jsonData) throws JsonProcessingException {
+        return objectMapper.readValue(
+            jsonData, PersonCreationEmailValidationEmailMessage.class
+        );
+    }
+
+    @Override
     public Map<String, Object> generateMapValues(PersonCreationEmailValidationEmailMessage values) {
         return Map.of(
             "personFirstName", values.getPersonFirstName(),
@@ -55,28 +68,18 @@ public class PersonCreationEmailValidationEmailTemplateHandlerImpl
     }
 
     @Override
-    protected String applyDataToTemplate(final String jsonBody, final EmailTemplate template) {
-        try {
-            var data = objectMapper.readValue(
-                jsonBody, PersonCreationEmailValidationEmailMessage.class
-            );
+    protected String applyDataToTemplate(
+        final PersonCreationEmailValidationEmailMessage data, final EmailTemplate template
+    ) {
+        var params = generateMapValues(data);
+        var context = new Context();
+        params.forEach(context::setVariable);
 
-            var params = generateMapValues(data);
-            var context = new Context();
-            params.forEach(context::setVariable);
+        var messageResolver = new StandardMessageResolver();
+        var executor = new StaticTemplateExecutor(
+            context, messageResolver, StandardTemplateModeHandlers.HTML5.getTemplateModeName()
+        );
 
-            var messageResolver = new StandardMessageResolver();
-            var executor = new StaticTemplateExecutor(
-                context, messageResolver, StandardTemplateModeHandlers.HTML5.getTemplateModeName()
-            );
-
-            return executor.processTemplateCode(template.getContent());
-        } catch (Exception e) {
-            log.error(
-                "Error trying to parse the following body to PersonCreationEmailValidationEmailMessage: {}",
-                jsonBody
-            );
-            throw new ErrorAtParsingJsonBodyException();
-        }
+        return executor.processTemplateCode(template.getContent());
     }
 }

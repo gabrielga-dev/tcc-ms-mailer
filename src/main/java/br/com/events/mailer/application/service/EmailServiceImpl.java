@@ -1,5 +1,6 @@
 package br.com.events.mailer.application.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import br.com.events.mailer.domain.message.EmailRequestMessage;
@@ -24,6 +25,6 @@ public class EmailServiceImpl implements EmailService {
     public void sendEmail(EmailRequestMessage emailRequestMessage, String jsonBody) {
         var emailContent = emailTemplateFactory.findTemplateHandlerAndApplyData(emailRequestMessage, jsonBody);
 
-        log.warn(emailContent);
+        log.warn(emailContent.getProcessedTemplate());
     }
 }
