@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import br.com.events.mailer.domain.entity.EmailTemplate;
-import br.com.events.mailer.domain.message.PersonCreationEmailValidationEmailMessage;
 import br.com.events.mailer.domain.repository.EmailTemplateRepository;
 import br.com.events.mailer.infrastructure.handler.emailTemplate.EmailTemplateHandler;
 import lombok.extern.slf4j.Slf4j;

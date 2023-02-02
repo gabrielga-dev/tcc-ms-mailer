@@ -2,8 +2,13 @@ package br.com.events.mailer.infrastructure.handler.emailTemplate;
 
 import java.util.Map;
 
+import org.thymeleaf.context.Context;
+import org.thymeleaf.messageresolver.StandardMessageResolver;
+import org.thymeleaf.templatemode.StandardTemplateModeHandlers;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import br.com.events.mailer.application.config.resolver.StaticTemplateExecutor;
 import br.com.events.mailer.domain.dto.EmailPresentationDTO;
 import br.com.events.mailer.domain.entity.EmailTemplate;
 import br.com.events.mailer.domain.repository.EmailTemplateRepository;
@@ -61,7 +66,19 @@ public abstract class EmailTemplateHandler<T> {
      * @param template {@link EmailTemplate} email template
      * @return {@link String} string that contains the populated email template
      */
-    abstract protected String applyDataToTemplate(T data, EmailTemplate template);
+
+    protected String applyDataToTemplate(final T data, final EmailTemplate template) {
+        var params = generateMapValues(data);
+        var context = new Context();
+        params.forEach(context::setVariable);
+
+        var messageResolver = new StandardMessageResolver();
+        var executor = new StaticTemplateExecutor(
+            context, messageResolver, StandardTemplateModeHandlers.HTML5.getTemplateModeName()
+        );
+
+        return executor.processTemplateCode(template.getContent());
+    }
 
     /**
      * This method builds the needed {@link EmailPresentationDTO} object to send an email
