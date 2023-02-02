@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.events.mailer.domain.message.PersonCreationEmailValidationEmailMessage;
+import br.com.events.mailer.domain.message.PasswordChangeEmailValidationEmailMessage;
 import br.com.events.mailer.domain.repository.EmailTemplateRepository;
 import br.com.events.mailer.infrastructure.handler.emailTemplate.EmailTemplateHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -20,15 +20,15 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
-public class PersonCreationEmailValidationEmailTemplateHandlerImpl
-    extends EmailTemplateHandler<PersonCreationEmailValidationEmailMessage> {
+public class PasswordChangeEmailValidationEmailTemplateHandlerImpl
+    extends EmailTemplateHandler<PasswordChangeEmailValidationEmailMessage> {
 
     private final ObjectMapper objectMapper;
 
-    @Value("${email.verification.url}")
-    private String emailValidationUrl;
+    @Value("${password.change.url}")
+    private String passwordChangeUrl;
 
-    public PersonCreationEmailValidationEmailTemplateHandlerImpl(
+    public PasswordChangeEmailValidationEmailTemplateHandlerImpl(
         final EmailTemplateRepository repository,
         final ObjectMapper objectMapper
     ) {
@@ -37,27 +37,27 @@ public class PersonCreationEmailValidationEmailTemplateHandlerImpl
     }
 
     public Long getHandledTemplateId() {
-        return 2L;
+        return 3L;
     }
 
     @Override
-    public String getSubject(PersonCreationEmailValidationEmailMessage data) {
-        return "Bem-vindo(a) ao MyEvents!";
+    public String getSubject(PasswordChangeEmailValidationEmailMessage data) {
+        return "Troca de senha no MyEvents!";
     }
 
     @Override
-    public PersonCreationEmailValidationEmailMessage parseData(final String jsonData) throws JsonProcessingException {
+    public PasswordChangeEmailValidationEmailMessage parseData(final String jsonData) throws JsonProcessingException {
         return objectMapper.readValue(
-            jsonData, PersonCreationEmailValidationEmailMessage.class
+            jsonData, PasswordChangeEmailValidationEmailMessage.class
         );
     }
 
     @Override
-    public Map<String, Object> generateMapValues(PersonCreationEmailValidationEmailMessage values) {
+    public Map<String, Object> generateMapValues(PasswordChangeEmailValidationEmailMessage values) {
         return Map.of(
             "personFirstName", values.getPersonFirstName(),
             "personLastName", values.getPersonLastName(),
-            "validationLink", emailValidationUrl + values.getEmailValidationUuid()
+            "validationLink", passwordChangeUrl + values.getEmailValidationUuid()
         );
     }
 }

@@ -1,6 +1,5 @@
 package br.com.events.mailer.application.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import br.com.events.mailer.domain.message.EmailRequestMessage;
