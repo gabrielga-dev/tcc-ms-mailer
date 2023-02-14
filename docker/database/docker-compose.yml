@@ -46,3 +46,18 @@ services:
 
     volumes:
       - ./init:/docker-entrypoint-initdb.d
+
+  msband_database:
+    container_name: "db-ms-band"
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: msband
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3309:3306"
+
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
