@@ -59,5 +59,17 @@ services:
     ports:
       - "3309:3306"
 
+  msfile_database:
+    container_name: "db-ms-file"
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: msfile
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3310:3306"
+
     volumes:
       - ./init:/docker-entrypoint-initdb.d
