@@ -1,0 +1,6 @@
+CREATE SCHEMA msauth;
+CREATE SCHEMA msmailer;
+CREATE SCHEMA msevent;
+CREATE SCHEMA msband;
+CREATE SCHEMA msfile;
+CREATE SCHEMA mslocation;

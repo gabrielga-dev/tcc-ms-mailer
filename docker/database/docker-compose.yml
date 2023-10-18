@@ -2,74 +2,16 @@ version: '3.1'
 
 services:
 
-  msauth_database:
-    container_name: "db-ms-auth"
+  my_events_db:
+    container_name: "my-events-db"
     image: mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: msauth
       MYSQL_USER: user
       MYSQL_PASSWORD: user
     ports:
       - "3306:3306"
 
     volumes:
-      - ./init:/docker-entrypoint-initdb.d
-
-  msmailer_database:
-    container_name: "db-ms-mailer"
-    image: mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: msmailer
-      MYSQL_USER: user
-      MYSQL_PASSWORD: user
-    ports:
-      - "3307:3306"
-
-    volumes:
-      - ./init:/docker-entrypoint-initdb.d
-
-  msevent_database:
-    container_name: "db-ms-event"
-    image: mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: msevent
-      MYSQL_USER: user
-      MYSQL_PASSWORD: user
-    ports:
-      - "3308:3306"
-
-    volumes:
-      - ./init:/docker-entrypoint-initdb.d
-
-  msband_database:
-    container_name: "db-ms-band"
-    image: mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: msband
-      MYSQL_USER: user
-      MYSQL_PASSWORD: user
-    ports:
-      - "3309:3306"
-
-  msfile_database:
-    container_name: "db-ms-file"
-    image: mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: msfile
-      MYSQL_USER: user
-      MYSQL_PASSWORD: user
-    ports:
-      - "3310:3306"
-
-    volumes:
-      - ./init:/docker-entrypoint-initdb.d
+      - ./init/init-db.sql:/docker-entrypoint-initdb.d/dump.sql
