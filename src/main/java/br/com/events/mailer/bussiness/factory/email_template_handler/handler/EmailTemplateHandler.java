@@ -5,6 +5,7 @@ import br.com.events.mailer.bussiness.use_case.email_template.FindEmailTemplateU
 import br.com.events.mailer.domain.io.email.EmailDTO;
 import br.com.events.mailer.domain.io.email_request.EmailRequestDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.messageresolver.StandardMessageResolver;
 import org.thymeleaf.templatemode.StandardTemplateModeHandlers;
@@ -14,6 +15,9 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 public abstract class EmailTemplateHandler {
+
+    @Value("${mail.username}")
+    private String mailUsername;
 
     protected final FindEmailTemplateUseCase findEmailTemplateUseCase;
 
@@ -36,6 +40,7 @@ public abstract class EmailTemplateHandler {
         var emailContent = executor.processTemplateCode(template.getContent());
 
         return new EmailDTO(
+                mailUsername,
                 emailRequest.getReceiverEmail(),
                 emailRequest.getSubject(),
                 emailContent

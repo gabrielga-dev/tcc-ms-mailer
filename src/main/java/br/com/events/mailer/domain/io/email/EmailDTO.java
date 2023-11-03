@@ -9,6 +9,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class EmailDTO {
 
+    private final String from;
     private final String to;
     private final String subject;
     private final String content;
