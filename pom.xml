@@ -156,6 +156,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>my-events-ms-mailer-docker</finalName>
     </build>
 
 </project>
