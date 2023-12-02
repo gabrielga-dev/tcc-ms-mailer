@@ -25,7 +25,7 @@ public class PersonCreationEmailTemplateHandler extends EmailTemplateHandler {
 
     @Override
     protected Map<String, String> generateTemplateParameters(EmailRequestDTO emailRequest) {
-        var validationLink = emailValidationUrl + emailRequest.getKeyAndValues().get("emailValidationUuid");
+        var validationLink = emailValidationUrl + emailRequest.getEmailValidationUuid();
         return Map.of(
                 "personFirstName", emailRequest.getKeyAndValues().get("personFirstName"),
                 "personLastName", emailRequest.getKeyAndValues().get("personLastName"),

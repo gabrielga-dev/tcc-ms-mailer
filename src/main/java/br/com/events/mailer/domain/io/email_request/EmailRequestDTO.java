@@ -34,6 +34,10 @@ public class EmailRequestDTO implements Serializable {
         return keyAndValues.get("email");
     }
 
+    public String getEmailValidationUuid(){
+        return keyAndValues.get("emailValidationUuid");
+    }
+
     public String getSubject(){
         return type.getSubject();
     }

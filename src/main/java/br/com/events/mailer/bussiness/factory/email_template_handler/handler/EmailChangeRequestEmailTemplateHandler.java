@@ -26,10 +26,11 @@ public class EmailChangeRequestEmailTemplateHandler extends EmailTemplateHandler
 
     @Override
     protected Map<String, String> generateTemplateParameters(EmailRequestDTO emailRequest) {
+        var validationLink = emailChangeUrl + emailRequest.getEmailValidationUuid();
         return Map.of(
                 "personFirstName", emailRequest.getKeyAndValues().get("personFirstName"),
                 "personLastName", emailRequest.getKeyAndValues().get("personLastName"),
-                "validationLink", emailChangeUrl
+                "validationLink", validationLink
         );
     }
 }
