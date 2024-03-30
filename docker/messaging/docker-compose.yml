@@ -2,6 +2,7 @@ version: '3'
 
 services:
   localstack:
+    restart: always
     image: localstack/localstack
     ports:
       - "4566-4599:4566-4599"
