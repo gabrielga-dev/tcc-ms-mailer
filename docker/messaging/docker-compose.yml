@@ -23,7 +23,9 @@ services:
     command: >
       /bin/sh -c "
       aws --endpoint-url=http://localstack:4566 sqs create-queue --queue-name my-events-email-request &&
-      aws --endpoint-url=http://localstack:4566 sqs create-queue --queue-name my-events-update-musician-request"
+      aws --endpoint-url=http://localstack:4566 sqs create-queue --queue-name my-events-update-musician-request &&
+      aws --endpoint-url=http://localstack:4566 sqs create-queue --queue-name my-events-quote-request-band &&
+      aws --endpoint-url=http://localstack:4566 sqs create-queue --queue-name my-events-quote-request-band-dlq"
     networks:
       - localstack_network
 

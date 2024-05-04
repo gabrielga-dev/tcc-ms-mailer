@@ -37,4 +37,8 @@ spring.jpa.show-sql=true
 
 spring.flyway.placeholder-prefix==>123654
 
-email.verification.url=http://localhost:3000/verification/
+
+email.verification.url=http://localhost:3000/verificar/
+email.change.url=http://localhost:3000/mudar-email/
+password.change.url=http://localhost:3000/mudar-senha/
+band.quote.requests.url=http://localhost:3000/bandas/%s/pedidos-de-orcamento

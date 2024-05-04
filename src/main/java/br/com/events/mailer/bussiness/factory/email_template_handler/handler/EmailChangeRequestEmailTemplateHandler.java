@@ -11,7 +11,6 @@ import java.util.Map;
 @Component
 public class EmailChangeRequestEmailTemplateHandler extends EmailTemplateHandler {
 
-
     @Value("${email.change.url}")
     private String emailChangeUrl;
 
