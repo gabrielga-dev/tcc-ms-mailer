@@ -13,7 +13,11 @@ public enum EmailRequestType {
     PASSWORD_CHANGE_EMAIL_VALIDATION(3L, "Solicitação de alteração de senha"),
     EMAIL_CHANGE_EMAIL_VALIDATION(4L, "Solicitação de alteração de email"),
     NEW_BAND_QUOTE_REQUEST(6L, "Criação de um novo pedido de orçamento para uma banda"),
-    BAND_QUOTE_REQUEST_DELETED(7L, "Pedido de orçamento para banda deletado!");
+    BAND_QUOTE_REQUEST_DELETED(7L, "Pedido de orçamento para banda deletado!"),
+    QUOTE_REQUEST_DECLINED(8L, "Pedido de orçamento negado!"),
+    QUOTE_REQUEST_ANSWERED(9L, "Resposta para seu pedido de orçamento!"),
+    QUOTE_HIRED(10L, "Orçamento contratado!"),
+    QUOTE_DECLINED(11L, "Orçamento não contratado!");
 
     private final Long templateId;
     private final String subject;
