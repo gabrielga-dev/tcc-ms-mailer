@@ -1,0 +1,63 @@
+version: '3.1'
+
+services:
+
+  my_events_db:
+    container_name: "my-events-db"
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - ./init/init-db.sql:/docker-entrypoint-initdb.d/dump.sql
+  my_events_ftp:
+    image: stilliard/pure-ftpd
+    container_name: ftp
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
+    environment:
+      - "PUBLICHOST=localhost"
+      - "FTP_USER_NAME=user"
+      - "FTP_USER_PASS=password"
+      - "FTP_USER_HOME=/home/ftpusers/user"
+    volumes:
+      - ./data:/home/ftpusers/user
+
+  my_events_localstack:
+    restart: always
+    image: localstack/localstack
+    ports:
+      - "4566-4599:4566-4599"
+    environment:
+      - SERVICES=sqs
+      - DEFAULT_REGION=us-east-1
+    networks:
+      - localstack_network
+
+  my_events_sqs_creator:
+    image: amazon/aws-cli
+    depends_on:
+      - my_events_localstack
+    environment:
+      - AWS_ACCESS_KEY_ID=access_key_id
+      - AWS_SECRET_ACCESS_KEY=access_key
+      - AWS_DEFAULT_REGION=us-east-1
+    command: >
+      /bin/sh -c "
+      aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name my-events-email-request &&
+      aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name my-events-update-musician-request &&
+      aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name my-events-quote-request-band &&
+      aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name my-events-quote-request-band-dlq &&
+      aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name my-events-quote-request-accepted &&
+      aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name my-events-quote-request-event-answer"
+    networks:
+      - localstack_network
+networks:
+  localstack_network:
+    driver: bridge
